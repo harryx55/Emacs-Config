@@ -1,28 +1,15 @@
-(message "loading init file...")
-(unless (>= emacs-major-version 24)
-  (error "Requires GNU Emacs 24 or later"))
-
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-(package-initialize)
-(when (not package-archive-contents)
-  (package-refresh-contents))
-
 (unless (package-installed-p 'use-package)
+  (package-refresh-contents)
   (package-install 'use-package))
 
-(require 'use-package)
-(setq use-package-always-ensure t)
+;; keep the installed packages in .emacs.d
+(setq package-user-dir (expand-file-name "elpa" user-emacs-directory))
+(package-initialize)
 
-(add-to-list 'load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/packages")
-(add-to-list 'load-path "~/.emacs.d/elpa")
-
-;; warn user when opening files larger then 10MBs
-(setq large-file-warning-threshold 10000000)
-
-;; disable bell ring
+;; disable the annoying bell ring
 (setq ring-bell-function 'ignore)
 
 ;; disable menu
@@ -34,6 +21,12 @@
 ;; disable tool bar
 (tool-bar-mode -1)
 
+;; auto saving every 8 key strokes
+(setq auto-save-interval 8)
 
+;; change backup folder
+(setq backup-directory-alist `(("." . "~/.saves")))
 
+;;;; C AND C++    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
